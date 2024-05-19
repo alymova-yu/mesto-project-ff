@@ -7,6 +7,9 @@ import {openPopup, closePopup, setPopupAnimation} from './scripts/modal.js'
 const cardList = document.querySelector('.places__list');  
 const editPopup = document.querySelector('.popup_type_edit'); 
 const addPopup = document.querySelector('.popup_type_new-card');  
+const popupImg = document.querySelector('.popup__image');
+const popupText = document.querySelector('.popup__caption');
+const cardPopup = document.querySelector('.popup_type_image');
 const profileForm = document.forms.editProfile;
 const newPlaceForm = document.forms.newPlace;
 const nameInput = profileForm.querySelector('.popup__input_type_name')
@@ -27,17 +30,24 @@ function handleProfileFormSubmit(evt) {
     closePopup(editPopup);
 }
 
+function handleImageClick (cardData) {
+    popupImg.setAttribute('src', cardData.link);
+    popupImg.setAttribute('alt', cardData.name);
+    popupText.textContent = cardData.name;
+    openPopup(cardPopup);
+}
+
 function addNewCard(evt) {
     evt.preventDefault(); 
     const elementCard = {name: newCardTitle.value, link: newCardLink.value}
-    const newEl = createCard(elementCard, removeElement, likeCard);
+    const newEl = createCard(elementCard, removeElement, likeCard, handleImageClick);
     cardList.prepend(newEl);
     newPlaceForm.reset();
     closePopup(addPopup);
 }
 
 initialCards.forEach(element => {
-    const cardElement = createCard(element, removeElement, likeCard);
+    const cardElement = createCard(element, removeElement, likeCard, handleImageClick);
     cardList.append(cardElement);
 });
 
