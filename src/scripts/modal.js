@@ -1,32 +1,31 @@
-import {closeKay} from '../index.js'
+const escapeKey = "Escape";
 
-function openPopup (item, closeFunction) {
+function openPopup (item) {
     item.classList.add("popup_is-opened");
-    document.addEventListener('keydown', listenKey);
-    item.addEventListener('click', closeFunction);
+    document.addEventListener('keydown', handleEscape);
+    item.addEventListener('click', handlePopupClose);
 }
 
-function closeRules (evt) {
-    const activePopup = document.querySelector('.popup_is-opened')
+function handlePopupClose (evt) {
     if (evt.target.classList.contains('popup__close') || evt.target === evt.currentTarget){
-        closePopup(activePopup)
+        closePopup(evt.currentTarget)
     }
 }
 
 function closePopup(item){
     item.classList.remove("popup_is-opened");
-    document.removeEventListener('keydown', listenKey); 
-    item.removeEventListener('click', closeRules);
+    document.removeEventListener('keydown', handleEscape); 
+    item.removeEventListener('click', handlePopupClose);
 }
 
-function listenKey (evt) {
-    if (evt.key === closeKay){
+function handleEscape (evt) {
+    if (evt.key === escapeKey){
         closePopup(document.querySelector('.popup_is-opened'))
     }
 }
 
-function popupAnimation (popup) {
+function setPopupAnimation (popup) {
     popup.classList.add('popup_is-animated')
 }
 
-export {openPopup, popupAnimation, closePopup, closeRules}
+export {openPopup, setPopupAnimation, closePopup}
