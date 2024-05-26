@@ -22,9 +22,6 @@ function getProfileInfo () {
     .then((res) => {
         return checkFetchResult(res)
       })
-    .catch((err) => {
-        console.log(err);
-      });  
 }
 
 function getCards () {
@@ -33,10 +30,7 @@ function getCards () {
     })
     .then((res) => {
         return checkFetchResult(res)
-      })
-    .catch((err) => {
-        console.log(err);
-      });  
+      }) 
 }
 
 function updateProfileInfo (name, job) {
@@ -50,10 +44,7 @@ function updateProfileInfo (name, job) {
     })
     .then((res) => {
         return checkFetchResult(res)
-      })
-    .catch((err) => {
-        console.log(err);
-      });   
+      })  
 }
 
 function updateProfileAvatar (imageAvatar) {
@@ -66,10 +57,7 @@ function updateProfileAvatar (imageAvatar) {
     })
     .then((res) => {
         return checkFetchResult(res)
-      })
-    .catch((err) => {
-        console.log(err);
-      });   
+      }) 
 }
 
 function postNewCard (name, link) {
@@ -84,9 +72,6 @@ function postNewCard (name, link) {
     .then((res) => {
         return checkFetchResult(res)
     })
-    .catch((err) => {
-        console.log(err);
-      });
 }
 
 function deleteCard (idCard) {
@@ -94,10 +79,6 @@ function deleteCard (idCard) {
         method: 'DELETE',
         headers: config.headers
     })
-    .catch((err) => {
-        console.log(err);
-    });
-
 }
 
 function putLikeCard (idCard) {
@@ -108,10 +89,6 @@ function putLikeCard (idCard) {
     .then((res) => {
         return checkFetchResult(res)
     })
-    .catch((err) => {
-        console.log(err);
-    });
-
 }
 
 function deleteLikeCard (idCard) {
@@ -122,10 +99,6 @@ function deleteLikeCard (idCard) {
     .then((res) => {
         return checkFetchResult(res)
     })
-    .catch((err) => {
-        console.log(err);
-    });
-
 }
 
 export {getProfileInfo,

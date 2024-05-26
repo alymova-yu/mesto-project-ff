@@ -2,7 +2,21 @@ import {putLikeCard, deleteLikeCard} from './api.js'
 
 const cardTemplate = document.querySelector('#card-template').content; 
 
-function createCard(cardData, removeCard, likeFunction, openPopapImage, myId, deleteFunction, putLikeCardFunction, deleteLikeCardFunction) {
+function deleteLikePromise(id) {
+    return new Promise(function (resolve) {
+      const result = deleteLikeCard(id)
+      resolve(result)
+    })
+}
+
+function putLikePromise(id) {
+    return new Promise(function (resolve) {
+      const result = putLikeCard(id)
+      resolve(result)
+    })
+}
+
+function createCard(cardData, removeCard, likeFunction, openPopapImage, myId, deleteFunction) {
     const userCard = cardTemplate.querySelector('.places__item').cloneNode(true);
     const userCardImage = userCard.querySelector('.card__image')
     const cardLikeButton = userCard.querySelector('.card__like-button')
@@ -31,25 +45,23 @@ function createCard(cardData, removeCard, likeFunction, openPopapImage, myId, de
     cardLikeButton.addEventListener('click', (evt) => {
         if (cardLikeButton.classList.contains('card__like-button_is-active')) {
             likeFunction(evt.target)
-            Promise.all([deleteLikeCardFunction(cardData._id)])
+            deleteLikePromise(cardData._id)
             .then((res) =>{
-                cardLikeNumber.textContent = res[0].likes.length;
+                cardLikeNumber.textContent = res.likes.length;
             })
             .catch(() => {
                 console.log('Запрос не удался')
             })
         } else {
             likeFunction(evt.target)
-            Promise.all([putLikeCardFunction(cardData._id)])
+            putLikePromise(cardData._id)
             .then((res) =>{
-                cardLikeNumber.textContent = res[0].likes.length;
+                cardLikeNumber.textContent = res.likes.length;
             })
             .catch(() => {
                 console.log('Запрос не удался')
             })
         }
-
-
     });
 
     userCardImage.addEventListener('click', () => openPopapImage(cardData));

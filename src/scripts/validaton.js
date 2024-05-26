@@ -1,8 +1,3 @@
-const newPlaceForm = document.forms.newPlace;
-const newAvatarForm = document.forms.newAvatar;
-const placeNameInput = newPlaceForm.querySelector('.popup__input_type_card-name');
-const urlInput = newPlaceForm.querySelector('.popup__input_type_url');
-const avatarInput = newAvatarForm.querySelector('.popup__input_type_avatar');
 
 function showInputError(formElement, inputElement, errorMessage, {inputErrorClass='', errorClass=''}) {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -75,9 +70,6 @@ function toggleButtonState (inputList, buttonElement, {inactiveButtonClass=''}) 
 function clearValidation(formElement, {submitButtonSelector='', inputSelector='', inputErrorClass='', errorClass=''}){
     const buttonElement = formElement.querySelector(submitButtonSelector);
     const inputList = Array.from(formElement.querySelectorAll(inputSelector));
-    placeNameInput.value = '';
-    urlInput.value = '';
-    avatarInput.value = ''
     inputList.forEach((element) => {
         element.classList.remove(inputErrorClass);
         const errorElement = formElement.querySelector(`.${element.id}-error`);
@@ -96,4 +88,4 @@ const validationSet = {
     errorClass: 'popup__input-error_active'
 }
 
-export {enableValidation, clearValidation, validationSet, newPlaceForm, newAvatarForm}
+export {enableValidation, clearValidation, validationSet}
