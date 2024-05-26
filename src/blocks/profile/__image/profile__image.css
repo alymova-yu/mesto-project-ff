@@ -10,6 +10,24 @@
   margin: 0 29px 0 0;
 }
 
+.profile__image:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  background-blend-mode: overlay;
+  position: relative;
+}
+
+.profile__image:hover::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+  background-image: url('/src/images/Vector.png');
+
+}
+
 @media screen and (max-width: 740px) {
   .profile__image {
     margin: 0 10px 0 0;
