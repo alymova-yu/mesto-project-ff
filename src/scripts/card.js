@@ -2,20 +2,6 @@ import {putLikeCard, deleteLikeCard} from './api.js'
 
 const cardTemplate = document.querySelector('#card-template').content; 
 
-function deleteLikePromise(id) {
-    return new Promise(function (resolve) {
-      const result = deleteLikeCard(id)
-      resolve(result)
-    })
-}
-
-function putLikePromise(id) {
-    return new Promise(function (resolve) {
-      const result = putLikeCard(id)
-      resolve(result)
-    })
-}
-
 function createCard(cardData, removeCard, likeFunction, openPopapImage, myId, deleteFunction) {
     const userCard = cardTemplate.querySelector('.places__item').cloneNode(true);
     const userCardImage = userCard.querySelector('.card__image')
@@ -33,7 +19,13 @@ function createCard(cardData, removeCard, likeFunction, openPopapImage, myId, de
     userCard.querySelector('.card__title').textContent = cardData.name;
     cardDeleteButton.addEventListener('click', () => {
         deleteFunction(cardData._id)
-        removeCard(userCard)
+        .then(() => {
+            removeCard(userCard)
+        })
+        .catch(() => {
+            console.log('Запрос не удался')
+        })
+        
     });
     const arrayLikes = []
     cardData.likes.forEach((element) => {
@@ -45,7 +37,7 @@ function createCard(cardData, removeCard, likeFunction, openPopapImage, myId, de
     cardLikeButton.addEventListener('click', (evt) => {
         if (cardLikeButton.classList.contains('card__like-button_is-active')) {
             likeFunction(evt.target)
-            deleteLikePromise(cardData._id)
+            deleteLikeCard(cardData._id)
             .then((res) =>{
                 cardLikeNumber.textContent = res.likes.length;
             })
@@ -54,7 +46,7 @@ function createCard(cardData, removeCard, likeFunction, openPopapImage, myId, de
             })
         } else {
             likeFunction(evt.target)
-            putLikePromise(cardData._id)
+            putLikeCard(cardData._id)
             .then((res) =>{
                 cardLikeNumber.textContent = res.likes.length;
             })

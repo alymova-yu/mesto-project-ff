@@ -2,7 +2,7 @@ import './pages/index.css';
 import {createCard, removeElement, likeCard} from './scripts/card.js';
 import {openPopup, closePopup, setPopupAnimation} from './scripts/modal.js';
 import {enableValidation, clearValidation, validationSet} from './scripts/validaton.js';
-import {getProfileInfo, getCards, updateProfileInfo, updateProfileAvatar, postNewCard, deleteCard, putLikeCard, deleteLikeCard} from './scripts/api.js';
+import {getProfileInfo, getCards, updateProfileInfo, updateProfileAvatar, postNewCard, deleteCard} from './scripts/api.js';
 
 
 const cardList = document.querySelector('.places__list');  
@@ -34,19 +34,12 @@ function putProfileInfo (result) {
     profilImage.style.backgroundImage = "url(" + result.avatar + ")";
 }
 
-function profileFormPromise() {
-    return new Promise(function (resolve) {
-      const result = updateProfileInfo(nameInput.value, jobInput.value)
-      resolve(result)
-    })
-}
-
 function handleProfileFormSubmit(evt) {
     evt.preventDefault(); 
     const currentSubmitButton = evt.target.querySelector('.popup__button')
     currentSubmitButton.textContent = 'Сохранение...'
     
-    profileFormPromise()
+    updateProfileInfo(nameInput.value, jobInput.value)
     .then((res) => {
         putProfileInfo(res);
         closePopup(editPopup);
@@ -66,18 +59,12 @@ function handleImageClick (cardData) {
     openPopup(cardPopup);
 }
 
-function postNewCardPromise() {
-    return new Promise(function (resolve) {
-      const result = postNewCard(newCardTitle.value, newCardLink.value)
-      resolve(result)
-    })
-}
 
 function addNewCard(evt) {
     evt.preventDefault(); 
     const currentSubmitButton = evt.target.querySelector('.popup__button')
     currentSubmitButton.textContent = 'Сохранение...'
-    postNewCardPromise()
+    postNewCard(newCardTitle.value, newCardLink.value)
     .then((res) => {
         const idOwner = res.owner._id
         const newEl = createCard(res, removeElement, likeCard, handleImageClick, idOwner, deleteCard);
@@ -93,18 +80,12 @@ function addNewCard(evt) {
     
 }
 
-function updateProfileAvatarPromise() {
-    return new Promise(function (resolve) {
-      const result = updateProfileAvatar(avatarInput.value)
-      resolve(result)
-    })
-}
 
 function editAvatar(evt) {
     evt.preventDefault(); 
     const currentSubmitButton = evt.target.querySelector('.popup__button')
     currentSubmitButton.textContent = 'Сохранение...'
-    updateProfileAvatarPromise()
+    updateProfileAvatar(avatarInput.value)
     .then((res) => {
         putProfileInfo(res);
         closePopup(newAvatarPopup);

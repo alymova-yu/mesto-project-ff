@@ -11,7 +11,7 @@ function checkFetchResult (res) {
         return res.json();
     } 
     else {
-        console.log(`Ошибка: ${res.status}`);
+        Promise.reject(`Ошибка: ${res.status}`)
     }
 }
 
@@ -75,7 +75,7 @@ function postNewCard (name, link) {
 }
 
 function deleteCard (idCard) {
-    fetch(`${config.baseUrl}/cards/${idCard}`, {
+    return fetch(`${config.baseUrl}/cards/${idCard}`, {
         method: 'DELETE',
         headers: config.headers
     })
